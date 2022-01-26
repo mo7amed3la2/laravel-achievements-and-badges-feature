@@ -35,7 +35,7 @@ class AchievementProgress extends Model
 
     public function isLocked()
     {
-        if ($this->points === $this->achievement->points) {
+        if ($this->points < $this->achievement->points) {
             return true;
         }
         return false;
