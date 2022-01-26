@@ -6,6 +6,7 @@ use App\Events\LessonWatched;
 use App\Events\CommentWritten;
 use App\Models\AchievementProgress;
 use Illuminate\Support\Facades\Event;
+use App\Listeners\CommentWrittenAchievements;
 use App\Listeners\LessonsWatchedAchievements;
 use App\Observers\AchievementProgressObserver;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -19,7 +20,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         CommentWritten::class => [
-            //
+            CommentWrittenAchievements::class
         ],
         LessonWatched::class => [
             LessonsWatchedAchievements::class
