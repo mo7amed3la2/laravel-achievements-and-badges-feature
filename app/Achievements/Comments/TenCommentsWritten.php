@@ -2,9 +2,9 @@
 
 namespace App\Achievements\Comments;
 
-use App\Contracts\Achievements;
+use App\Achievements\Comments\CommentWrittenAchievement;
 
-class TenCommentsWritten extends Achievements
+class TenCommentsWritten extends CommentWrittenAchievement
 {
     
     /**

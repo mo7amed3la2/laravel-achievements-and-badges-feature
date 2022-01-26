@@ -2,9 +2,9 @@
 
 namespace App\Achievements\Lessons;
 
-use App\Contracts\Achievements;
+use App\Achievements\Lessons\LessonWatchedAchievement;
 
-class FiftyLessonsWatched extends Achievements
+class FiftyLessonsWatched extends LessonWatchedAchievement
 {
 
     /**

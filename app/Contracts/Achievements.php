@@ -29,7 +29,13 @@ abstract class Achievements
      * @var int
      */
     public $points = 1;
-
+    
+    /**
+     * tpye
+     *
+     * @var undefined
+     */
+    public $tpye = null;
     /**
      * next_achievement
      *
@@ -71,6 +77,7 @@ abstract class Achievements
         $model->name        = $this->name;
         $model->description = $this->description;
         $model->points      = $this->points;
+        $model->type        = $this->type;
         if ($hasNextAchievement) {
             $model->next_achievement_id = $nextAchievement->id;
         }

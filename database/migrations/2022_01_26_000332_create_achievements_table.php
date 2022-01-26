@@ -21,13 +21,14 @@ class CreateAchievementsTable extends Migration
             $table->string('description');
             $table->unsignedSmallInteger('points')->default(1);
             $table->string('class_name');
-            $table->unsignedInteger('next_achievement_id')->nullable();
+            $table->enum('type', ['comment_written', 'lesson_watched'])->nullable();
+            // $table->unsignedInteger('next_achievement_id')->nullable();
             $table->timestamps();
         });
 
-        Schema::table('achievements',function (Blueprint $table){
-            $table->foreign('next_achievement_id')->references('id')->on('achievements');
-        });
+        // Schema::table('achievements',function (Blueprint $table){
+            // $table->foreign('next_achievement_id')->references('id')->on('achievements');
+        // });
     }
 
     /**

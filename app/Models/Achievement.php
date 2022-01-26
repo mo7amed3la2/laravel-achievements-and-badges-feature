@@ -9,8 +9,11 @@ class Achievement extends Model
 {
     use HasFactory;
 
+    const TYPE_COMMENT_WRITTEN = 'comment_written';
+    const TYPE_LESSON_WATCHED = 'lesson_watched';
+
     public $with = ['nextAchievement'];
-    
+
     public function nextAchievement()
     {
         return $this->belongsto(Achievement::class, 'next_achievement_id');
