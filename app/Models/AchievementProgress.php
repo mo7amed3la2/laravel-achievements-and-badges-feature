@@ -40,4 +40,9 @@ class AchievementProgress extends Model
         } 
         return false;
     }
+
+    public function isUnLocked()
+    {
+        return !$this->isLocked();
+    }
 }
