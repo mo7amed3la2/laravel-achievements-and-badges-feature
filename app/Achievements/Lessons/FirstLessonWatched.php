@@ -4,6 +4,7 @@ namespace App\Achievements;
 
 use App\Contracts\Achievements;
 use App\Achievements\FiveLessonWatched;
+use App\Achievements\TenLessonsWatched;
 
 class FirstLessonWatched extends Achievements
 {
@@ -27,5 +28,5 @@ class FirstLessonWatched extends Achievements
      *
      * @var undefined
      */
-    public  $next_achievement = FiveLessonWatched::class;
+    public  $next_achievement = TenLessonsWatched::class;
 }

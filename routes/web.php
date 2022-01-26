@@ -2,7 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use App\Achievements\FiveLessonWatched;
+use App\Achievements\FiveLessonsWatched;
 use App\Achievements\FirstLessonWatched;
 use App\Http\Controllers\AchievementsController;
 
