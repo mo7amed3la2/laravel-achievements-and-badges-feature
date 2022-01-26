@@ -31,6 +31,13 @@ abstract class Achievements
     public $points = 1;
 
     /**
+     * next_achievement
+     *
+     * @var null
+     */
+    public $next_achievement = null;
+
+    /**
      * Return class achievement name
      * @return void
      */
@@ -47,21 +54,31 @@ abstract class Achievements
     public function getModel()
     {
         $model = Achievement::where('class_name', $this->getClassName())->first();
-        // once model already exists  
         if (is_null($model)) {
             $model = new Achievement();
             $model->class_name = $this->getClassName();
+        }
+        
+        // handle adding next achievement.
+        $hasNextAchievement = false;
+        if ($this->next_achievement != null) {
+            $hasNextAchievement = true;
+            $achievement = new $this->next_achievement;
+            $nextAchievement = $achievement->getModel();
         }
 
         // updates the model with data from the called achievement class
         $model->name        = $this->name;
         $model->description = $this->description;
         $model->points      = $this->points;
+        if ($hasNextAchievement) {
+            $model->next_achievement_id = $nextAchievement->id;
+        }
         $model->save();
 
         return $model;
     }
-    
+
     /**
      * Assign progress to achiever.
      *
