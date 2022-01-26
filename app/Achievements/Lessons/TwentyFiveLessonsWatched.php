@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Achievements;
+namespace App\Achievements\Lessons;
 
 use App\Contracts\Achievements;
-use App\Achievements\FiftyLessonsWatched;
 
 class TwentyFiveLessonsWatched extends Achievements
 {
@@ -27,8 +26,6 @@ class TwentyFiveLessonsWatched extends Achievements
      *
      * @var int
      */
-    public $points = 15;
-
-    public  $next_achievement = FiftyLessonsWatched::class;
+    public $points = 25;
 
 }

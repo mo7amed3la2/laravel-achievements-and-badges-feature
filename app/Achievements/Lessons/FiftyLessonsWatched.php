@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Achievements;
+namespace App\Achievements\Lessons;
 
 use App\Contracts\Achievements;
 
@@ -26,5 +26,5 @@ class FiftyLessonsWatched extends Achievements
      *
      * @var int
      */
-    public $points = 25;
+    public $points = 50;
 }
