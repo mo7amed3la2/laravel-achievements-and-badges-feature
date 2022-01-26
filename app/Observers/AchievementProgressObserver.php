@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use Carbon\Carbon;
 use App\Models\AchievementProgress;
 
 class AchievementProgressObserver
@@ -15,6 +16,19 @@ class AchievementProgressObserver
     public function created(AchievementProgress $achievementProgress)
     {
         //
+    }
+
+    /**
+     * Handle the AchievementProgress "updating" event.
+     *
+     * @param  \App\Models\AchievementProgress  $achievementProgress
+     * @return void
+     */
+    public function updating(AchievementProgress $achievementProgress)
+    {
+        if (is_null($achievementProgress->unlockedAt) && $achievementProgress->isLocked()) {
+            $achievementProgress->unlocked_at = Carbon::now();
+        }
     }
 
     /**

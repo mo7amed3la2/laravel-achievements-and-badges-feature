@@ -2,8 +2,11 @@
 
 namespace App\Traits;
 
+use App\Traits\EntityRelationsAchievements;
+
 trait Achiever
 {
+    use EntityRelationsAchievements;
 
     public function addProgress($instance, $points)
     {
