@@ -37,7 +37,7 @@ class AchievementProgress extends Model
     {
         if ($this->points < $this->achievement->points) {
             return true;
-        }
+        } 
         return false;
     }
 }
