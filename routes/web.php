@@ -11,5 +11,5 @@ Route::get('/users/{user}/achievements', [AchievementsController::class, 'index'
 
 Route::get('/',function(){
     $user = User::first(); 
-    $user->unlock(new FiveLessonWatched());
+    $user->addProgress(new FiveLessonWatched(),1);
 });
