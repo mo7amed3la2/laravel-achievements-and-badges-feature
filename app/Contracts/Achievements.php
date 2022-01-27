@@ -56,11 +56,11 @@ abstract class Achievements
     {
 
         if (empty($this->model)) {
-            throw new Exception('you must set model name');
+            throw new Exception('you must set the model name');
         }
 
         if (empty($this->model)) {
-            throw new Exception('you must set model progress name');
+            throw new Exception('you must set the model progress name');
         }
     }
 
@@ -95,7 +95,7 @@ abstract class Achievements
             $model = new $this->model();
             $model->class_name = $this->getClassName();
         }
-        // updates the model with data from the called achievement class
+        // updates the model with data from the called achievements class
         $model->name        = $this->name;
         $model->description = $this->description;
         $model->points      = $this->points;
