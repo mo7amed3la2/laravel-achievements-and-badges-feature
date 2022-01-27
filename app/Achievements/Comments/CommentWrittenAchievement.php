@@ -9,9 +9,9 @@ use App\Models\AchievementProgress;
 
 class CommentWrittenAchievement extends Achievements
 {
-    public $modelClass = Achievement::class;
+    public $model = Achievement::class;
 
-    public $modelProgressClass = AchievementProgress::class;
+    public $modelProgress = AchievementProgress::class;
 
     public $type = Achievement::TYPE_COMMENT_WRITTEN;
 

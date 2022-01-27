@@ -9,9 +9,9 @@ use App\Models\AchievementProgress;
 
 class LessonWatchedAchievement extends Achievements
 {
-    public $modelClass = Achievement::class;
+    public $model = Achievement::class;
 
-    public $modelProgressClass = AchievementProgress::class;
+    public $modelProgress = AchievementProgress::class;
 
     public $type = Achievement::TYPE_LESSON_WATCHED;
 

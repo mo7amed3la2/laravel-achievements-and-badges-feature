@@ -2,6 +2,7 @@
 
 namespace App\Contracts;
 
+use Exception;
 use App\Models\Achievement;
 use App\Models\AchievementProgress;
 
@@ -10,18 +11,18 @@ abstract class Achievements
 {
 
     /**
-     * modelClass
+     * model
      *
      * @var mixed
      */
-    public $modelClass;
+    public $model;
 
     /**
-     * modelProgressClass
+     * modelProgress
      *
      * @var mixed
      */
-    public $modelProgressClass;
+    public $modelProgress;
 
     /**
      * name
@@ -51,14 +52,26 @@ abstract class Achievements
      */
     public $tpye = null;
 
+    public function __construct()
+    {
+
+        if (empty($this->model)) {
+            throw new Exception('you must set model name');
+        }
+
+        if (empty($this->model)) {
+            throw new Exception('you must set model progress name');
+        }
+    }
+
     /**
-     * modelClass
+     * model
      *
      * @return object
      */
-    private function modelClassName()
+    private function modelName()
     {
-        return (new \ReflectionClass($this->modelClass))->newInstance();
+        return (new \ReflectionClass($this->model))->newInstance();
     }
 
     /**
@@ -77,9 +90,9 @@ abstract class Achievements
      */
     public function getModel()
     {
-        $model = $this->modelClassName()::where('class_name', $this->getClassName())->first();
+        $model = $this->modelName()::where('class_name', $this->getClassName())->first();
         if (is_null($model)) {
-            $model = new $this->modelClass();
+            $model = new $this->model();
             $model->class_name = $this->getClassName();
         }
         // updates the model with data from the called achievement class
@@ -120,12 +133,12 @@ abstract class Achievements
     {
         $achievement = $this->getModel();
         $foreignKey = $achievement->getForeignKey();
-        $progress = $this->modelProgressClass::where($foreignKey, $achievement->id)
+        $progress = $this->modelProgress::where($foreignKey, $achievement->id)
             ->where('user_id', $achiever->id)
             ->first();
 
         if (is_null($progress)) {
-            $progress = new $this->modelProgressClass();
+            $progress = new $this->modelProgress();
             $progress->$foreignKey = $achievement->id;
             $progress->user_id = $achiever->id;
             $progress->save();

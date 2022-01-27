@@ -9,9 +9,9 @@ use App\Contracts\Achievements;
 
 class BadgesAchievement extends Achievements
 {
-    public $modelClass = Badge::class;
+    public $model = Badge::class;
 
-    public $modelProgressClass = BadgeProgress::class;
+    public $modelProgress = BadgeProgress::class;
 
     public $type = Badge::TYPE_BADGE;
 
