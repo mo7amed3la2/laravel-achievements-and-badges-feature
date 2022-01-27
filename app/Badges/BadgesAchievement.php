@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Achievements\Badges;
+namespace App\Badges;
 
 use App\Models\Badge;
 use App\Events\BadgeUnlocked;

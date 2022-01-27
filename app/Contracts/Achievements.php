@@ -137,7 +137,7 @@ abstract class Achievements
 
     /**
      * triggerUnlocked
-     *
+     * trigge event when unlocked achievement.
      * @return void
      */
     public abstract function triggerUnlocked($achiever);

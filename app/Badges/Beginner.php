@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Achievements\Badges;
+namespace App\Badges;
 
-use App\Achievements\Badges\BadgesAchievement;
+use App\Badges\BadgesAchievement;
 
 class Beginner extends BadgesAchievement
 {

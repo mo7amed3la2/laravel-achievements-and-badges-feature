@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Achievements\Badges\Master;
+use App\Badges\Master;
+use App\Badges\Advanced;
+use App\Badges\Intermediate;
 use App\Events\AchievementUnlocked;
-use App\Achievements\Badges\Advanced;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Achievements\Badges\Intermediate;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class AchievementUnlockedListener
