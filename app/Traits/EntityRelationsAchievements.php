@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\Achievement;
 use App\Models\AchievementProgress;
 
 trait EntityRelationsAchievements
@@ -11,11 +12,6 @@ trait EntityRelationsAchievements
         return $this->hasMany(AchievementProgress::class);
     }
 
-    public function nextAvailableAchievements()
-    {
-        return $this->lastAchievements();
-    }
-
     public function inProgressAchievements()
     {
         return $this->achievements()->whereNull('unlocked_at')->where('points', '>', 0)->get();
@@ -23,7 +19,7 @@ trait EntityRelationsAchievements
 
     public function unlockedAchievements()
     {
-        return $this->achievements()->with('achievement')->whereNotNull('unlocked_at')->get()->pluck('achievement.name');
+        return $this->achievements()->with('achievement')->whereNotNull('unlocked_at')->get();
     }
 
     public function lockedAchievements()
@@ -31,14 +27,25 @@ trait EntityRelationsAchievements
         return $this->achievements()->with('achievement')->whereNull('unlocked_at')->get();
     }
 
-    public function lastAchievements()
+
+    public function listUnlockedAchievements()
     {
-        $latest =  $this->achievements()->with('achievement')->latest()->first();
-        $nextAchievement = $latest->achievement->nextAchievement;
-        if($latest->isUnLocked() and $nextAchievement){
-            return $nextAchievement['name'];
-        }elseif($latest->isLocked()){
-            return $latest->achievement->pluck('name');
-        }
+        return $this->unlockedAchievements()->pluck('achievement.name');
+    }
+
+    public function nextAvailableAchievements()
+    {
+        $nextCommentsWrittenAchievement = AchievementProgress::whereHas('achievement', function ($q) {
+            $q->where('type', Achievement::TYPE_COMMENT_WRITTEN);
+        })->whereNull('unlocked_at')->first()->achievement->name;
+
+        $nextLessonWatchedAchievement = AchievementProgress::whereHas('achievement', function ($q) {
+            $q->where('type', Achievement::TYPE_LESSON_WATCHED);
+        })->whereNull('unlocked_at')->first()->achievement->name;
+
+        return [
+            $nextCommentsWrittenAchievement,
+            $nextLessonWatchedAchievement
+        ];
     }
 }

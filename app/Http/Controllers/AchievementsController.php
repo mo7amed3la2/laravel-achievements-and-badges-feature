@@ -10,7 +10,7 @@ class AchievementsController extends Controller
     public function index(User $user)
     {
         return response()->json([
-            'unlocked_achievements' => $user->unlockedAchievements(),
+            'unlocked_achievements' => $user->listUnlockedAchievements(),
             'next_available_achievements' => $user->nextAvailableAchievements(),
             'current_badge' => '',
             'next_badge' => '',
