@@ -12,9 +12,9 @@ class AchievementsController extends Controller
         return response()->json([
             'unlocked_achievements' => $user->listUnlockedAchievements(),
             'next_available_achievements' => $user->nextAvailableAchievements(),
-            'current_badge' => '',
+            'current_badge' => $user->currentBadge(),
             'next_badge' => $user->nextAvailableBadge(),
-            'remaing_to_unlock_next_badge' => 0
+            'remaing_to_unlock_next_badge' => $user->remaingToUnlockNextBadge(),
         ]);
     }
 }
