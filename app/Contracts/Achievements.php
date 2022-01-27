@@ -2,6 +2,7 @@
 
 namespace App\Contracts;
 
+use ReflectionClass;
 use App\Models\Achievement;
 use App\Events\BadgeUnlocked;
 use App\Events\AchievementUnlocked;
@@ -10,6 +11,20 @@ use App\Models\AchievementProgress;
 
 abstract class Achievements
 {
+
+    /**
+     * modelClass
+     *
+     * @var mixed
+     */
+    public $modelClass;
+
+    /**
+     * modelProgressClass
+     *
+     * @var mixed
+     */
+    public $modelProgressClass;
 
     /**
      * name
@@ -38,12 +53,16 @@ abstract class Achievements
      * @var undefined
      */
     public $tpye = null;
+
     /**
-     * next_achievement
+     * modelClass
      *
-     * @var null
+     * @return object
      */
-    public $next_achievement = null;
+    private function modelClassName()
+    {
+        return (new \ReflectionClass($this->modelClass))->newInstance();
+    }
 
     /**
      * Return class achievement name
@@ -53,7 +72,7 @@ abstract class Achievements
     {
         return (new \ReflectionClass(get_called_class()))->getShortName();
     }
-
+    
     /**
      * Create | Update achievements table based on achievement type who is using it,
      * then return achievement model.
@@ -61,30 +80,17 @@ abstract class Achievements
      */
     public function getModel()
     {
-        $model = Achievement::where('class_name', $this->getClassName())->first();
+        $model = $this->modelClassName()::where('class_name', $this->getClassName())->first();
         if (is_null($model)) {
-            $model = new Achievement();
+            $model = new $this->modelClass();
             $model->class_name = $this->getClassName();
         }
-
-        // handle adding next achievement.
-        $hasNextAchievement = false;
-        if ($this->next_achievement != null) {
-            $hasNextAchievement = true;
-            $achievement = new $this->next_achievement;
-            $nextAchievement = $achievement->getModel();
-        }
-
         // updates the model with data from the called achievement class
         $model->name        = $this->name;
         $model->description = $this->description;
         $model->points      = $this->points;
         $model->type        = $this->type;
-        // if ($hasNextAchievement) {
-        //     $model->next_achievement_id = $nextAchievement->id;
-        // }
         $model->save();
-
         return $model;
     }
 
@@ -116,12 +122,12 @@ abstract class Achievements
     public function getOrCreateProgressForAchiever($achiever)
     {
         $achievement = $this->getModel();
-        $progress = AchievementProgress::where('achievement_id', $achievement->id)
+        $progress = $this->modelProgressClass::where('achievement_id', $achievement->id)
             ->where('user_id', $achiever->id)
             ->first();
 
         if (is_null($progress)) {
-            $progress = new AchievementProgress();
+            $progress = new $this->modelProgressClass();
             $progress->achievement_id = $achievement->id;
             $progress->user_id = $achiever->id;
             $progress->save();
@@ -133,9 +139,9 @@ abstract class Achievements
 
     public function triggerUnlocked($achiever)
     {
-        if($this->type == Achievement::TYPE_BADGE){
+        if ($this->type == Achievement::TYPE_BADGE) {
             event(new BadgeUnlocked($this->name, $achiever));
-        }else{
+        } else {
             event(new AchievementUnlocked($this->name, $achiever));
         }
     }
