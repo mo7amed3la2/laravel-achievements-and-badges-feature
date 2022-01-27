@@ -35,23 +35,18 @@ trait EntityRelationsAchievements
 
     public function nextAvailableAchievements()
     {
-
         $data = [];
 
-        $commentsWrittenAchievement = AchievementProgress::whereHas('achievement', function ($q) {
-            $q->where('type', Achievement::TYPE_COMMENT_WRITTEN);
-        })->whereNull('unlocked_at')->first();
+        $achievementTypes = Achievement::select('type')->groupBy('type')->get()->pluck('type');
 
-        if ($commentsWrittenAchievement) {
-            $data[] = $commentsWrittenAchievement->achievement->name;
-        }
+        foreach ($achievementTypes as $type) {
+            $achievement = AchievementProgress::whereHas('achievement', function ($q) use ($type) {
+                $q->where('type', $type);
+            })->whereNull('unlocked_at')->first();
 
-        $lessonWatchedAchievement = AchievementProgress::whereHas('achievement', function ($q) {
-            $q->where('type', Achievement::TYPE_LESSON_WATCHED);
-        })->whereNull('unlocked_at')->first();
-
-        if ($lessonWatchedAchievement) {
-            $data[] = $lessonWatchedAchievement->achievement->name;
+            if ($achievement) {
+                $data[] = $achievement->achievement->name;
+            }
         }
 
         return $data;
