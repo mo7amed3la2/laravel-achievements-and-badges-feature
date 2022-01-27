@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Achievement extends Model
+class Badge extends Model
 {
     use HasFactory;
 
-    const TYPE_COMMENT_WRITTEN = 'comment_written';
-    const TYPE_LESSON_WATCHED = 'lesson_watched';
+    const TYPE_BADGE = 'badge';
+
 }

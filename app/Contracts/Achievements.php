@@ -2,10 +2,7 @@
 
 namespace App\Contracts;
 
-use ReflectionClass;
 use App\Models\Achievement;
-use App\Events\BadgeUnlocked;
-use App\Events\AchievementUnlocked;
 use App\Models\AchievementProgress;
 
 
@@ -72,7 +69,7 @@ abstract class Achievements
     {
         return (new \ReflectionClass(get_called_class()))->getShortName();
     }
-    
+
     /**
      * Create | Update achievements table based on achievement type who is using it,
      * then return achievement model.
@@ -122,13 +119,14 @@ abstract class Achievements
     public function getOrCreateProgressForAchiever($achiever)
     {
         $achievement = $this->getModel();
-        $progress = $this->modelProgressClass::where('achievement_id', $achievement->id)
+        $foreignKey = $achievement->getForeignKey();
+        $progress = $this->modelProgressClass::where($foreignKey, $achievement->id)
             ->where('user_id', $achiever->id)
             ->first();
 
         if (is_null($progress)) {
             $progress = new $this->modelProgressClass();
-            $progress->achievement_id = $achievement->id;
+            $progress->$foreignKey = $achievement->id;
             $progress->user_id = $achiever->id;
             $progress->save();
         }
@@ -137,12 +135,10 @@ abstract class Achievements
     }
 
 
-    public function triggerUnlocked($achiever)
-    {
-        if ($this->type == Achievement::TYPE_BADGE) {
-            event(new BadgeUnlocked($this->name, $achiever));
-        } else {
-            event(new AchievementUnlocked($this->name, $achiever));
-        }
-    }
+    /**
+     * triggerUnlocked
+     *
+     * @return void
+     */
+    public abstract function triggerUnlocked($achiever);
 }

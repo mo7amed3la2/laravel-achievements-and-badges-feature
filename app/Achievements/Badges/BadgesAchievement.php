@@ -2,15 +2,21 @@
 
 namespace App\Achievements\Badges;
 
-use App\Models\Achievement;
+use App\Models\Badge;
+use App\Events\BadgeUnlocked;
+use App\Models\BadgeProgress;
 use App\Contracts\Achievements;
-use App\Models\AchievementProgress;
 
 class BadgesAchievement extends Achievements
 {
-    public $modelClass = Achievement::class;
-    
-    public $modelProgressClass = AchievementProgress::class;
+    public $modelClass = Badge::class;
 
-    public $type = Achievement::TYPE_BADGE;
+    public $modelProgressClass = BadgeProgress::class;
+
+    public $type = Badge::TYPE_BADGE;
+
+    public function triggerUnlocked($achiever)
+    {
+        event(new BadgeUnlocked($this->name, $achiever));
+    }
 }
