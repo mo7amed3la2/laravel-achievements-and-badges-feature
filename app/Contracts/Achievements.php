@@ -86,7 +86,7 @@ abstract class Achievements
     /**
      * Create | Update achievements table based on achievement type who is using it,
      * then return achievement model.
-     * @return Achievement
+     * @return object $model
      */
     public function getModel()
     {
@@ -127,7 +127,7 @@ abstract class Achievements
     /**
      * Create progrees for achiever or get created progress.
      * @param  mixed $achiever
-     * @return AchievementProgress
+     * @return object $modelProgress
      */
     public function getOrCreateProgressForAchiever($achiever)
     {
