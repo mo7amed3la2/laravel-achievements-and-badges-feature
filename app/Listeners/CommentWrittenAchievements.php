@@ -35,8 +35,8 @@ class CommentWrittenAchievements
         $user = $event->comment->user;
         $user->unlock(new FirstCommentWritten());
         $user->addProgress(new ThreeCommentsWritten(), 1);
-        // $user->addProgress(new FiveCommentsWritten(), 1);
-        // $user->addProgress(new TenCommentsWritten(), 1);
-        // $user->addProgress(new TwentyCommentsWritten(), 1);
+        $user->addProgress(new FiveCommentsWritten(), 1);
+        $user->addProgress(new TenCommentsWritten(), 1);
+        $user->addProgress(new TwentyCommentsWritten(), 1);
     }
 }
