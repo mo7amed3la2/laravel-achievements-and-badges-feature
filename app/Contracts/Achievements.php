@@ -3,6 +3,8 @@
 namespace App\Contracts;
 
 use App\Models\Achievement;
+use App\Events\BadgeUnlocked;
+use App\Events\AchievementUnlocked;
 use App\Models\AchievementProgress;
 
 
@@ -29,7 +31,7 @@ abstract class Achievements
      * @var int
      */
     public $points = 1;
-    
+
     /**
      * tpye
      *
@@ -64,7 +66,7 @@ abstract class Achievements
             $model = new Achievement();
             $model->class_name = $this->getClassName();
         }
-        
+
         // handle adding next achievement.
         $hasNextAchievement = false;
         if ($this->next_achievement != null) {
@@ -78,9 +80,9 @@ abstract class Achievements
         $model->description = $this->description;
         $model->points      = $this->points;
         $model->type        = $this->type;
-        if ($hasNextAchievement) {
-            $model->next_achievement_id = $nextAchievement->id;
-        }
+        // if ($hasNextAchievement) {
+        //     $model->next_achievement_id = $nextAchievement->id;
+        // }
         $model->save();
 
         return $model;
@@ -99,6 +101,10 @@ abstract class Achievements
         if ($progress->isLocked()) {
             $progress->points += $points;
             $progress->save();
+
+            if ($progress->isUnLocked()) {
+                $this->triggerUnlocked($achiever);
+            }
         }
     }
 
@@ -122,5 +128,15 @@ abstract class Achievements
         }
 
         return $progress;
+    }
+
+
+    public function triggerUnlocked($achiever)
+    {
+        if($this->type == Achievement::TYPE_BADGE){
+            event(new BadgeUnlocked($this->name, $achiever));
+        }else{
+            event(new AchievementUnlocked($this->name, $achiever));
+        }
     }
 }

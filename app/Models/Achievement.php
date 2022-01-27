@@ -11,6 +11,7 @@ class Achievement extends Model
 
     const TYPE_COMMENT_WRITTEN = 'comment_written';
     const TYPE_LESSON_WATCHED = 'lesson_watched';
+    const TYPE_BADGE = 'badge';
 
     public $with = ['nextAchievement'];
 

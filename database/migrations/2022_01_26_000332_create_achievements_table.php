@@ -21,7 +21,7 @@ class CreateAchievementsTable extends Migration
             $table->string('description');
             $table->unsignedSmallInteger('points')->default(1);
             $table->string('class_name');
-            $table->enum('type', ['comment_written', 'lesson_watched'])->nullable();
+            $table->enum('type', ['comment_written', 'lesson_watched','badge'])->nullable();
             // $table->unsignedInteger('next_achievement_id')->nullable();
             $table->timestamps();
         });
