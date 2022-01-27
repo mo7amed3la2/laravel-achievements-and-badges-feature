@@ -4,10 +4,8 @@ namespace App\Traits;
 
 use App\Models\Badge;
 use App\Badges\Beginner;
-use App\Models\Achievement;
 use App\Badges\Intermediate;
 use App\Models\BadgeProgress;
-use App\Models\AchievementProgress;
 
 trait EntityRelationsBadges
 {
