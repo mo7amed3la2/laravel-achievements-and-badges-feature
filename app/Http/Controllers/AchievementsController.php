@@ -13,7 +13,7 @@ class AchievementsController extends Controller
             'unlocked_achievements' => $user->listUnlockedAchievements(),
             'next_available_achievements' => $user->nextAvailableAchievements(),
             'current_badge' => '',
-            'next_badge' => '',
+            'next_badge' => $user->nextAvailableBadge(),
             'remaing_to_unlock_next_badge' => 0
         ]);
     }

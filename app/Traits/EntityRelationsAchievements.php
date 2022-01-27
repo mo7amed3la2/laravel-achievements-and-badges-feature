@@ -2,7 +2,9 @@
 
 namespace App\Traits;
 
+use App\Models\Badge;
 use App\Models\Achievement;
+use App\Models\BadgeProgress;
 use App\Models\AchievementProgress;
 
 trait EntityRelationsAchievements
@@ -55,5 +57,17 @@ trait EntityRelationsAchievements
         }
 
         return $data;
+    }
+
+    public function nextAvailableBadge()
+    {
+        $nextAvailableBadge = BadgeProgress::whereHas('badge', function ($q) {
+            $q->where('type', Badge::TYPE_BADGE);
+        })->whereNull('unlocked_at')->first();
+
+        if ($nextAvailableBadge) {
+            return $nextAvailableBadge->badge->description;
+        }
+        return '';
     }
 }
