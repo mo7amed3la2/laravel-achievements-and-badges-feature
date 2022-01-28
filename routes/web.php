@@ -34,6 +34,6 @@ Route::get('/fire-events', function () {
 
 Route::get('/test', function () {
     $user = User::first();
-    $user->setProgress(new FiveCommentsWritten(), 10);
+    $user->setProgress(new FiveCommentsWritten(), -10);
 
 });

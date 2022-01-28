@@ -124,13 +124,13 @@ class AchievementTest extends TestCase
     }
 
     /**
-     * Test set progress achievement.
+     * Test add progress for adding points greater than achievement points.
      *
      * @return void
      */
     public function test_add_progress_for_adding_points_greater_than_achievement_points()
     {
-        // adding set progress 4 point for first achievement.
+        // adding add progress 4 point for first achievement.
         $this->user->addProgress($this->fiveCommentsWritten, 10);
         $this->user = $this->user->fresh();
 
@@ -142,6 +142,24 @@ class AchievementTest extends TestCase
 
         // check user has one achievement unlocked with expected pooints.
         $this->assertEquals(5, $this->user->unlockedAchievements()->first()->points);
+    }
+
+    /**
+     * Test add progress for adding points less than zreo.
+     *
+     * @return void
+     */
+    public function test_add_progress_for_adding_points_less_than_zero()
+    {
+        // adding add progress 4 point for first achievement.
+        $this->user->addProgress($this->fiveCommentsWritten, -10);
+        $this->user = $this->user->fresh();
+
+        // check user does not have unlocked achievements.
+        $this->assertCount(0, $this->user->unlockedAchievements());
+
+        // check user has one achievement in progress.
+        $this->assertCount(0, $this->user->inProgressAchievements());
     }
 
     /**
@@ -176,7 +194,7 @@ class AchievementTest extends TestCase
     }
 
     /**
-     * Test set progress achievement.
+     * Test set progress for adding points greater than achievement points.
      *
      * @return void
      */
@@ -194,5 +212,23 @@ class AchievementTest extends TestCase
 
         // check user has one achievement unlocked with expected pooints.
         $this->assertEquals(5, $this->user->unlockedAchievements()->first()->points);
+    }
+
+    /**
+     * Test set progress for adding points less than zreo.
+     *
+     * @return void
+     */
+    public function test_set_progress_for_adding_points_less_than_zero()
+    {
+        // adding set progress 4 point for first achievement.
+        $this->user->setProgress($this->fiveCommentsWritten, -10);
+        $this->user = $this->user->fresh();
+
+        // check user does not have unlocked achievements.
+        $this->assertCount(0, $this->user->unlockedAchievements());
+
+        // check user has one achievement in progress.
+        $this->assertCount(0, $this->user->inProgressAchievements());
     }
 }

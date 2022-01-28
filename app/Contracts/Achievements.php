@@ -122,6 +122,8 @@ abstract class Achievements
         if ($progress->isLocked()) {
             if ($points >= $progress->{$this->modelProgressRelationNameWithModel}->points) {
                 $progress->points = $progress->{$this->modelProgressRelationNameWithModel}->points;
+            } elseif ($points < 0) {
+                $progress->points = 0;
             } else {
                 $progress->points += $points;
             }
@@ -146,6 +148,8 @@ abstract class Achievements
         if ($progress->isLocked()) {
             if ($points >= $progress->{$this->modelProgressRelationNameWithModel}->points) {
                 $progress->points = $progress->{$this->modelProgressRelationNameWithModel}->points;
+            } elseif ($points < 0) {
+                $progress->points = 0;
             } else {
                 $progress->points = $points;
             }
