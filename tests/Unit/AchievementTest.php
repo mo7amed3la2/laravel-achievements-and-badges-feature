@@ -67,7 +67,7 @@ class AchievementTest extends TestCase
      *
      * @return void
      */
-    public function test_in_progress()
+    public function test_add_progress()
     {
         // adding in progress the first achievement.
         $this->user->addProgress($this->fiveCommentsWritten, 1);
@@ -85,10 +85,10 @@ class AchievementTest extends TestCase
 
     /**
      * Test in progress achievement has expected points.
-     * @depends test_in_progress
+     * @depends test_add_progress
      * @return void
      */
-    public function test_in_progress_achievement_has_expected_points()
+    public function test_add_progress_achievement_has_expected_points()
     {
         // adding in progress the first achievement.
         $this->user->addProgress($this->fiveCommentsWritten, 1);
@@ -110,7 +110,7 @@ class AchievementTest extends TestCase
      *
      * @return void
      */
-    public function test_in_progress_for_achievement_that_unlocked_from_first_time()
+    public function test_add_progress_for_achievement_that_unlocked_from_first_time()
     {
         // adding in progress the first achievement.
         $this->user->addProgress($this->firstCommentWritten, 1);
@@ -121,6 +121,27 @@ class AchievementTest extends TestCase
 
         // check user does not have achievement in progress.
         $this->assertCount(0, $this->user->inProgressAchievements());
+    }
+
+    /**
+     * Test set progress achievement.
+     *
+     * @return void
+     */
+    public function test_add_progress_for_adding_points_greater_than_achievement_points()
+    {
+        // adding set progress 4 point for first achievement.
+        $this->user->addProgress($this->fiveCommentsWritten, 10);
+        $this->user = $this->user->fresh();
+
+        // check user does not have unlocked achievements.
+        $this->assertCount(1, $this->user->unlockedAchievements());
+
+        // check user has one achievement in progress.
+        $this->assertCount(0, $this->user->inProgressAchievements());
+
+        // check user has one achievement unlocked with expected pooints.
+        $this->assertEquals(5, $this->user->unlockedAchievements()->first()->points);
     }
 
     /**
