@@ -18,7 +18,7 @@ class AchievementGroupTest extends TestCase
     }
 
     /**
-     * Test unlocked achievement.
+     * Test unlocked achievements group.
      *
      * @return void
      */
@@ -39,6 +39,24 @@ class AchievementGroupTest extends TestCase
 
         // check user has one unlocked achievement.
         $this->assertCount(1, $this->user->unlockedAchievements());
+    }
+
+    /**
+     * Test in progress achievements group.
+     *
+     * @return void
+     */
+    public function test_in_progress_achievements_group()
+    {
+
+        $points = 1;
+
+        (new CommentsAchievementsGroup)->addGroupProgress($this->user, $points);
+
+        $this->user = $this->user->fresh();
+
+        // check user has one unlocked achievement.
+        $this->assertCount(2, $this->user->lockedAchievements());
 
         // check the second unlocked achievement get the same data.
         $this->assertEquals($this->threeCommentsWritten->name, $this->user->lockedAchievements()[0]->achievement->name);
