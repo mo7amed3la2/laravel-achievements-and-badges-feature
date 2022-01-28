@@ -58,5 +58,4 @@ class AchievementTest extends TestCase
         $this->assertEquals($this->fiveCommentsWritten->name, $this->user->unlockedAchievements()[1]->achievement->name);
     }
 
-
 }
