@@ -21,11 +21,4 @@ class Beginner extends BadgesAchievement
      */
     public $description = "Beginner: less than 4 Achievements";
 
-    /**
-     * points
-     *
-     * @var int
-     */
-    public $points = 0;
-
 }
