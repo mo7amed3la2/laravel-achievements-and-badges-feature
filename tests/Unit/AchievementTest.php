@@ -84,6 +84,28 @@ class AchievementTest extends TestCase
     }
 
     /**
+     * Test in progress achievement.
+     * @depends test_in_progress
+     * @return void
+     */
+    public function test_in_progress_achievement_has_expected_points()
+    {
+        // adding in progress the first achievement.
+        $this->user->addProgress($this->fiveCommentsWritten, 1);
+        $this->user = $this->user->fresh();
+
+        // check user has one achievement in progress.
+        $this->assertEquals(1, $this->user->inProgressAchievements()->first()->points);
+
+        // adding another point in progress the first achievement.
+        $this->user->addProgress($this->fiveCommentsWritten, 1);
+        $this->user = $this->user->fresh();
+
+        // check user has one achievement in progress with expected pooints.
+        $this->assertEquals(2, $this->user->inProgressAchievements()->first()->points);
+    }
+
+    /**
      * Test in progress for unlocked achievement.
      *
      * @return void
@@ -108,8 +130,8 @@ class AchievementTest extends TestCase
      */
     public function test_set_progress()
     {
-        // adding in progress the first achievement.
-        $this->user->setProgress($this->fiveCommentsWritten, 1);
+        // adding set progress 4 point for first achievement.
+        $this->user->setProgress($this->fiveCommentsWritten, 4);
         $this->user = $this->user->fresh();
 
         // check user does not have unlocked achievements.
@@ -118,7 +140,17 @@ class AchievementTest extends TestCase
         // check user has one achievement in progress.
         $this->assertCount(1, $this->user->inProgressAchievements());
 
+        // check user has one achievement in progress with expected pooints.
+        $this->assertEquals(4, $this->user->inProgressAchievements()->first()->points);
+
+        // adding set progress 1 point for first achievement.
+        $this->user->setProgress($this->fiveCommentsWritten, 1);
+        $this->user = $this->user->fresh();
+
+        // check user has one achievement in progress with expected pooints.
+        $this->assertEquals(1, $this->user->inProgressAchievements()->first()->points);
+
         // check in progress achievement get the same data.
         $this->assertEquals($this->fiveCommentsWritten->name, $this->user->inProgressAchievements()->first()->achievement->name);
-    }    
+    }
 }
