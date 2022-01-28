@@ -15,23 +15,31 @@ Route::get('/users/{user}/achievements', [AchievementsController::class, 'index'
 
 Route::get('/', function () {
     $user = User::first();
-    $lesson = Lesson::first();
+
+    Lesson::factory()
+        ->count(1)
+        ->create();
+
+    $lesson  = Lesson::latest()->first();
+    $user->lessons()->attach([$lesson->id => ['watched' => true]]);
+    LessonWatched::dispatch($lesson, $user);
+
 
     Comment::factory()
-            ->count(1)
-            ->create();
+        ->count(1)
+        ->create();
 
     $comment = Comment::latest()->first();
-
-    LessonWatched::dispatch($lesson, $user);
     CommentWritten::dispatch($comment);
 });
 
 
 Route::get('/test', function () {
-    $type = 'lesson_watched';
-    $achievement = AchievementProgress::whereHas('achievement', function ($q) use ($type) {
-        $q->where('type', $type);
-    })->get()->max('points');
-    dd($achievement);
+
+
+    $lesson = new Lesson(array('title' => 'A new lesson.'));
+
+    $user = User::find(1);
+
+    $lesson = $user->lessons()->attach([2 => ['watched' => true]]);
 });

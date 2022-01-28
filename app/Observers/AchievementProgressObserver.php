@@ -26,7 +26,7 @@ class AchievementProgressObserver
      */
     public function updating(AchievementProgress $achievementProgress)
     {
-        if (is_null($achievementProgress->unlockedAt) && !$achievementProgress->isLocked()) {
+        if (is_null($achievementProgress->unlockedAt) && $achievementProgress->isUnLocked()) {
             $achievementProgress->unlocked_at = Carbon::now();
         }
     }

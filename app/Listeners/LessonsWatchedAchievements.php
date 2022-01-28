@@ -32,10 +32,23 @@ class LessonsWatchedAchievements
     public function handle(LessonWatched $event)
     {
         $user = $event->user;
-        $user->unlock(new FirstLessonWatched());
-        $user->addProgress(new FiveLessonsWatched(), 1);
-        $user->addProgress(new TenLessonsWatched(), 1);
-        $user->addProgress(new TwentyFiveLessonsWatched(), 1);
-        $user->addProgress(new FiftyLessonsWatched(), 1);
+        $countUserLessonWatched = $user->watched->count();
+
+        $achivements = [
+            new FirstLessonWatched(),
+            new FiveLessonsWatched(),
+            new TenLessonsWatched(),
+            new TwentyFiveLessonsWatched(),
+            new FiftyLessonsWatched(),
+        ];
+        
+        foreach ($achivements as $achivement) {
+            if ($countUserLessonWatched >= $achivement->points) {
+                $user->unlock($achivement);
+            } else {
+                // to handle the scenario user already add comments before achievement assigned.
+                $user->setProgress($achivement, $countUserLessonWatched);
+            }
+        }
     }
 }
