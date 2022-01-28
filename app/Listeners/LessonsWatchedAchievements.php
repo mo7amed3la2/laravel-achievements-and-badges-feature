@@ -30,6 +30,7 @@ class LessonsWatchedAchievements
         $user = $event->user;
         $countUserLessonWatched = $user->watched->count();
 
+        // adding progress point to user.
         (new LessonsAchievementsGroup)->addGroupProgress($user, $countUserLessonWatched);
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Contracts;
 
 use Exception;
-use Carbon\Carbon;
 
 abstract class Achievements
 {

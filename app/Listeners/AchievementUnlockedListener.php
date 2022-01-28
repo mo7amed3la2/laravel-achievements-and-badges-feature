@@ -30,8 +30,9 @@ class AchievementUnlockedListener
         $user = $event->user;
         $countUserAchievements = $user->unlockedAchievements()->count();
 
-        info('Hi '. $user->name . ' you have been unlocked achievement ' . $event->achievement_name);
-        
+        info('Hi ' . $user->name . ' you have been unlocked achievement ' . $event->achievement_name);
+
+        // adding progress point to user.   
         (new BadgesAchievementsGroup)->addGroupProgress($user, $countUserAchievements);
     }
 }

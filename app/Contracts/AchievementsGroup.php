@@ -12,7 +12,14 @@ abstract class AchievementsGroup
      * @return array
      */
     public abstract function group();
-
+    
+    /**
+     * addGroupProgress
+     *
+     * @param $achiver
+     * @param $points
+     * @return void
+     */
     public function addGroupProgress($achiver, $points)
     {
         foreach ($this->group() as $achivement) {

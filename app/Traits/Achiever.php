@@ -10,10 +10,9 @@ trait Achiever
     use EntityRelationsAchievements, EntityRelationsBadges;
     
     /**
-     * addProgress
-     * adding achievement in progress.
-     * @param  mixed $instance
-     * @param  mixed $points
+     * Adding achievement in progress.
+     * @param $instance
+     * @param $points
      * @return void
      */
     public function addProgress($instance, $points)
@@ -24,8 +23,8 @@ trait Achiever
     /**
      * Set progress poitns to achiever directly.
      *
-     * @param  mixed $instance
-     * @param  mixed $points
+     * @param $instance
+     * @param $points
      * @return void
      */
     public function setProgress($instance, $points)
@@ -34,9 +33,8 @@ trait Achiever
     }
     
     /**
-     * unlock
-     * unlock achievements directly.
-     * @param  mixed $instance
+     * Unlock achievements directly.
+     * @param $instance
      * @return void
      */
     public function unlock($instance)
