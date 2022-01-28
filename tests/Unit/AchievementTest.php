@@ -37,7 +37,7 @@ class AchievementTest extends TestCase
         $this->user->unlock($this->fiveCommentsWritten);
         $this->user = $this->user->fresh();
 
-        // check user has one unlocked achievement.
+        // check user has two unlocked achievement.
         $this->assertCount(2, $this->user->unlockedAchievements());
 
         // check the second unlocked achievement get the same data.
@@ -83,7 +83,7 @@ class AchievementTest extends TestCase
         $this->user->addProgress($this->fiveCommentsWritten, 1);
         $this->user = $this->user->fresh();
 
-        // check user has one achievement in progress with expected pooints.
+        // check user has two achievement in progress with expected pooints.
         $this->assertEquals(2, $this->user->inProgressAchievements()->first()->points);
     }
 
@@ -122,7 +122,7 @@ class AchievementTest extends TestCase
         // check user has one achievement in progress.
         $this->assertCount(0, $this->user->inProgressAchievements());
 
-        // check user has one achievement unlocked with expected pooints.
+        // check user has five achievement unlocked with expected pooints.
         $this->assertEquals(5, $this->user->unlockedAchievements()->first()->points);
     }
 
@@ -140,7 +140,7 @@ class AchievementTest extends TestCase
         // check user does not have unlocked achievements.
         $this->assertCount(0, $this->user->unlockedAchievements());
 
-        // check user has one achievement in progress.
+        // check user has zreo achievement in progress.
         $this->assertCount(0, $this->user->inProgressAchievements());
     }
 
@@ -186,13 +186,13 @@ class AchievementTest extends TestCase
         $this->user->setProgress($this->fiveCommentsWritten, 10);
         $this->user = $this->user->fresh();
 
-        // check user does not have unlocked achievements.
+        // check user has one unlocked achievements.
         $this->assertCount(1, $this->user->unlockedAchievements());
 
-        // check user has one achievement in progress.
+        // check user has zero achievement in progress.
         $this->assertCount(0, $this->user->inProgressAchievements());
 
-        // check user has one achievement unlocked with expected pooints.
+        // check user has five achievement unlocked with expected pooints.
         $this->assertEquals(5, $this->user->unlockedAchievements()->first()->points);
     }
 
@@ -210,7 +210,7 @@ class AchievementTest extends TestCase
         // check user does not have unlocked achievements.
         $this->assertCount(0, $this->user->unlockedAchievements());
 
-        // check user has one achievement in progress.
+        // check user has zero achievement in progress.
         $this->assertCount(0, $this->user->inProgressAchievements());
     }
 }

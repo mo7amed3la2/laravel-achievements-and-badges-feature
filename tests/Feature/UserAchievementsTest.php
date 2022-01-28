@@ -7,14 +7,12 @@ use App\Badges\Beginner;
 use App\Badges\Intermediate;
 use App\Achievements\Lessons\FirstLessonWatched;
 use App\Achievements\Lessons\FiveLessonsWatched;
-use App\Achievements\Comments\ThreeCommentsWritten;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserAchievementsTest extends TestCase
 {
     use DatabaseTransactions;
 
-    public $threeCommentsWritten;
     public $firstBadge;
     public $secondBadge;
 
@@ -26,8 +24,6 @@ class UserAchievementsTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->threeCommentsWritten = new ThreeCommentsWritten();
 
         $this->firstBadge = new Beginner();
         $this->secondBadge = new Intermediate();
