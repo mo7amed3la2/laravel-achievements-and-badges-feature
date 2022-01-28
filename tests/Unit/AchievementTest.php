@@ -10,21 +10,7 @@ use App\Achievements\Comments\FiveCommentsWritten;
 
 class AchievementTest extends TestCase
 {
-    public $users;
-    public $firstCommentWritten;
-    public $fiveCommentsWritten;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        Artisan::call('migrate:fresh');
-        Artisan::call('migrate');
-        $this->user = User::factory()->create();
-
-        $this->firstCommentWritten = new FirstCommentWritten();
-        $this->fiveCommentsWritten = new FiveCommentsWritten();
-    }
-
+    
     /**
      * Tests the setup
      */
