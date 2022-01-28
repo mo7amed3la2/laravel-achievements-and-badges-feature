@@ -28,10 +28,10 @@ class AchievementUnlockedListener
     public function handle(AchievementUnlocked $event)
     {
         $user = $event->user;
-        $countUserAchievements = $user->unlockedBadges()->count();
+        $countUserAchievements = $user->unlockedAchievements()->count();
 
         info('Hi '. $user->name . ' you have been unlocked achievement ' . $event->achievement_name);
-
+        
         (new BadgesAchievementsGroup)->addGroupProgress($user, $countUserAchievements);
     }
 }
