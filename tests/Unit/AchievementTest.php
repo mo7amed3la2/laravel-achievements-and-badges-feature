@@ -58,4 +58,27 @@ class AchievementTest extends TestCase
         $this->assertEquals($this->fiveCommentsWritten->name, $this->user->unlockedAchievements()[1]->achievement->name);
     }
 
+    /**
+     * Test in progress achievement.
+     *
+     * @return void
+     */
+    public function test_in_progress()
+    {
+        // check user does not have achievements.
+        $this->assertEquals(0, $this->user->achievements->count());
+
+        // adding in progress the first achievement.
+        $this->user->addProgress($this->fiveCommentsWritten, 1);
+        $this->user = $this->user->fresh();
+
+        // check user does not have unlocked achievements.
+        $this->assertEquals(0, $this->user->unlockedAchievements()->count());
+
+        // check user has one achievement in progress.
+        $this->assertEquals(1, $this->user->inProgressAchievements()->count());
+
+        // check in progress achievement get the same data.
+        $this->assertEquals($this->fiveCommentsWritten->name, $this->user->inProgressAchievements()->first()->achievement->name);
+    }
 }
