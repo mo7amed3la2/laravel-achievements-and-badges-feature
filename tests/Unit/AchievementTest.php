@@ -43,7 +43,12 @@ class AchievementTest extends TestCase
 
         // check user has one unlocked achievement.
         $this->assertEquals(1, $this->user->unlockedAchievements()->count());
+
+        // unlock another achievement.
+        $this->user->unlock($this->fiveCommentsWritten);
+        $this->user = $this->user->fresh();
+
+        // check user has one unlocked achievement.
+        $this->assertEquals(2, $this->user->unlockedAchievements()->count());
     }
-
-
 }
