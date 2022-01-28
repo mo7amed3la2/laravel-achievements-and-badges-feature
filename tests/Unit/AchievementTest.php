@@ -3,10 +3,6 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use App\Models\User;
-use Illuminate\Support\Facades\Artisan;
-use App\Achievements\Comments\FirstCommentWritten;
-use App\Achievements\Comments\FiveCommentsWritten;
 
 class AchievementTest extends TestCase
 {
