@@ -2,10 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Badges\Master;
-use App\Badges\Advanced;
-use App\Badges\Intermediate;
 use App\Events\AchievementUnlocked;
+use App\Badges\BadgesAchievementsGroup;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -30,9 +28,10 @@ class AchievementUnlockedListener
     public function handle(AchievementUnlocked $event)
     {
         $user = $event->user;
+        $countUserAchievements = $user->unlockedBadges()->count();
+
         info('Hi '. $user->name . ' you have been unlocked achievement ' . $event->achievement_name);
-        $user->addProgress(new Intermediate(), 1);
-        $user->addProgress(new Advanced(), 1);
-        $user->addProgress(new Master(), 1);
+
+        (new BadgesAchievementsGroup)->addGroupProgress($user, $countUserAchievements);
     }
 }

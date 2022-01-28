@@ -27,6 +27,7 @@ class BadgeUnlockedListener
     public function handle(BadgeUnlocked $event)
     {
         $user = $event->user;
+  
         info('Hi '. $user->name . ' you have been unlocked badge ' . $event->achievement_name);
     }
 }
