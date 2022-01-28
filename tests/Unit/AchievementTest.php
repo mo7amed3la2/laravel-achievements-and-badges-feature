@@ -7,8 +7,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
 use App\Achievements\Comments\FirstCommentWritten;
 use App\Achievements\Comments\FiveCommentsWritten;
-use App\Models\Achievement;
-use App\Models\AchievementProgress;
 
 class AchievementTest extends TestCase
 {
@@ -102,4 +100,25 @@ class AchievementTest extends TestCase
         // check user does not have achievement in progress.
         $this->assertCount(0, $this->user->inProgressAchievements());
     }
+
+    /**
+     * Test set progress achievement.
+     *
+     * @return void
+     */
+    public function test_set_progress()
+    {
+        // adding in progress the first achievement.
+        $this->user->setProgress($this->fiveCommentsWritten, 1);
+        $this->user = $this->user->fresh();
+
+        // check user does not have unlocked achievements.
+        $this->assertCount(0, $this->user->unlockedAchievements());
+
+        // check user has one achievement in progress.
+        $this->assertCount(1, $this->user->inProgressAchievements());
+
+        // check in progress achievement get the same data.
+        $this->assertEquals($this->fiveCommentsWritten->name, $this->user->inProgressAchievements()->first()->achievement->name);
+    }    
 }
