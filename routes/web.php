@@ -31,9 +31,3 @@ Route::get('/fire-events', function () {
     $comment = Comment::latest()->first();
     CommentWritten::dispatch($comment);
 });
-
-Route::get('/test', function () {
-    $user = User::first();
-    $user->setProgress(new FiveCommentsWritten(), -10);
-
-});
