@@ -1,5 +1,6 @@
 <?php
 
+use App\Achievements\Comments\FiveCommentsWritten;
 use App\Models\User;
 use App\Models\Lesson;
 use App\Models\Comment;
@@ -29,4 +30,10 @@ Route::get('/fire-events', function () {
 
     $comment = Comment::latest()->first();
     CommentWritten::dispatch($comment);
+});
+
+Route::get('/test', function () {
+    $user = User::first();
+    $user->setProgress(new FiveCommentsWritten(), 10);
+
 });

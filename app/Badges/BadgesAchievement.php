@@ -13,6 +13,8 @@ class BadgesAchievement extends Achievements
 
     public $modelProgress = BadgeProgress::class;
 
+    public $modelProgressRelationNameWithModel = 'badge';
+
     public $type = Badge::TYPE_BADGE;
 
     public function triggerUnlocked($achiever)

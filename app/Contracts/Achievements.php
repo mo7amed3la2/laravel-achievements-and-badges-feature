@@ -20,6 +20,13 @@ abstract class Achievements
      * @var string
      */
     public $modelProgress;
+    
+    /**
+     * modelProgressRelationNameWithModel
+     *
+     * @var string
+     */
+    public $modelProgressRelationNameWithModel = 'achievement';
 
     /**
      * name
@@ -133,7 +140,11 @@ abstract class Achievements
     {
         $progress = $this->getOrCreateProgressForAchiever($achiever);
         if ($progress->isLocked()) {
-            $progress->points = $points;
+            if($points >= $progress->{$this->modelProgressRelationNameWithModel}->points){
+                $progress->points = $progress->{$this->modelProgressRelationNameWithModel}->points;
+            }else{
+                $progress->points = $points;
+            }
             $progress->save();
             if ($progress->isUnLocked()) {
                 $this->triggerUnlocked($achiever);

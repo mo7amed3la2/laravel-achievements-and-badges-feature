@@ -84,7 +84,7 @@ class AchievementTest extends TestCase
     }
 
     /**
-     * Test in progress achievement.
+     * Test in progress achievement has expected points.
      * @depends test_in_progress
      * @return void
      */
@@ -106,7 +106,7 @@ class AchievementTest extends TestCase
     }
 
     /**
-     * Test in progress for unlocked achievement.
+     * Test in progress for achievement that unlocked from first time.
      *
      * @return void
      */
@@ -152,5 +152,26 @@ class AchievementTest extends TestCase
 
         // check in progress achievement get the same data.
         $this->assertEquals($this->fiveCommentsWritten->name, $this->user->inProgressAchievements()->first()->achievement->name);
+    }
+
+    /**
+     * Test set progress achievement.
+     *
+     * @return void
+     */
+    public function test_set_progress_for_adding_points_greater_than_achievement_points()
+    {
+        // adding set progress 4 point for first achievement.
+        $this->user->setProgress($this->fiveCommentsWritten, 10);
+        $this->user = $this->user->fresh();
+
+        // check user does not have unlocked achievements.
+        $this->assertCount(1, $this->user->unlockedAchievements());
+
+        // check user has one achievement in progress.
+        $this->assertCount(0, $this->user->inProgressAchievements());
+
+        // check user has one achievement unlocked with expected pooints.
+        $this->assertEquals(5, $this->user->unlockedAchievements()->first()->points);
     }
 }
