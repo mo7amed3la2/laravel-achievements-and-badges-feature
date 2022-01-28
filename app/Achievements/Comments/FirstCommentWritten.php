@@ -19,6 +19,6 @@ class FirstCommentWritten extends CommentWrittenAchievement
      *
      * @var string
      */
-    public $description = "Achievement First Comment Written";
+    public $description = "Achievement 1 Comment Written";
 
 }

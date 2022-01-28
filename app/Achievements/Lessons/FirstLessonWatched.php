@@ -19,6 +19,6 @@ class FirstLessonWatched extends LessonWatchedAchievement
      *
      * @var string
      */
-    public $description = "Achievement First Lesson Watched";
+    public $description = "Achievement 1 Lesson Watched";
 
 }

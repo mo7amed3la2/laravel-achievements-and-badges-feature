@@ -3,9 +3,7 @@
 namespace App\Contracts;
 
 use Exception;
-use App\Models\Achievement;
-use App\Models\AchievementProgress;
-
+use Carbon\Carbon;
 
 abstract class Achievements
 {
@@ -13,14 +11,14 @@ abstract class Achievements
     /**
      * model
      *
-     * @var mixed
+     * @var string
      */
     public $model;
 
     /**
      * modelProgress
      *
-     * @var mixed
+     * @var string
      */
     public $modelProgress;
 
@@ -46,11 +44,11 @@ abstract class Achievements
     public $points = 1;
 
     /**
-     * tpye
+     * type
      *
-     * @var undefined
+     * @var string
      */
-    public $tpye = null;
+    public $type;
 
     public function __construct()
     {
@@ -90,11 +88,12 @@ abstract class Achievements
      */
     public function getModel()
     {
-        $model = $this->modelName()::where('class_name', $this->getClassName())->first();
+        $model = $this->modelName()::where('class_name', $this->getClassName())->where('type', $this->type)->first();
         if (is_null($model)) {
             $model = new $this->model();
             $model->class_name = $this->getClassName();
         }
+
         // updates the model with data from the called achievements class
         $model->name        = $this->name;
         $model->description = $this->description;
@@ -123,6 +122,25 @@ abstract class Achievements
             }
         }
     }
+    
+    /**
+     * Set progress point to achiever directly.
+     *
+     * @param  mixed $achiever
+     * @param  mixed $points
+     * @return void
+     */
+    public function setProgressToAchiever($achiever, $points)
+    {
+        $progress = $this->getOrCreateProgressForAchiever($achiever);
+        if ($progress->isLocked()) {
+            $progress->points = $points;
+            $progress->save();
+            if ($progress->isUnLocked()) {
+                $this->triggerUnlocked($achiever);
+            }
+        }
+    }
 
     /**
      * Create progrees for achiever or get created progress.
@@ -138,7 +156,7 @@ abstract class Achievements
             ->first();
 
         if (is_null($progress)) {
-            $progress = new $this->modelProgress();
+            $progress = new $this->modelProgress;
             $progress->$foreignKey = $achievement->id;
             $progress->user_id = $achiever->id;
             $progress->save();
@@ -147,10 +165,8 @@ abstract class Achievements
         return $progress;
     }
 
-
     /**
-     * triggerUnlocked
-     * trigger event when unlocked achievement.
+     * Trigger event when unlocked achievement.
      * @return void
      */
     public abstract function triggerUnlocked($achiever);

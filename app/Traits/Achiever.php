@@ -22,6 +22,18 @@ trait Achiever
     }
     
     /**
+     * Set progress poitns to achiever directly.
+     *
+     * @param  mixed $instance
+     * @param  mixed $points
+     * @return void
+     */
+    public function setProgress($instance, $points)
+    {
+        $instance->setProgressToAchiever($this, $points);
+    }
+    
+    /**
      * unlock
      * unlock achievements directly.
      * @param  mixed $instance
@@ -29,6 +41,6 @@ trait Achiever
      */
     public function unlock($instance)
     {
-        $this->addProgress($instance, $instance->points);
+        $this->setProgress($instance, $instance->points);
     }
 }

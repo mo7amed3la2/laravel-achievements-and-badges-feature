@@ -19,7 +19,7 @@ trait EntityRelationsAchievements
 
     public function unlockedAchievements()
     {
-        return $this->achievements()->with('achievement')->whereNotNull('unlocked_at')->get();
+        return $this->achievements()->with('achievement')->whereNotNull('unlocked_at')->orderBy('points','ASC')->get();
     }
 
     public function lockedAchievements()
@@ -42,7 +42,7 @@ trait EntityRelationsAchievements
         foreach ($achievementTypes as $type) {
             $achievement = AchievementProgress::whereHas('achievement', function ($q) use ($type) {
                 $q->where('type', $type);
-            })->whereNull('unlocked_at')->first();
+            })->whereNull('unlocked_at')->orderBy('points','ASC')->first();
 
             if ($achievement) {
                 $data[] = $achievement->achievement->name;

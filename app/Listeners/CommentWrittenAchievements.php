@@ -33,10 +33,23 @@ class CommentWrittenAchievements
     {
         //
         $user = $event->comment->user;
-        $user->unlock(new FirstCommentWritten());
-        $user->addProgress(new ThreeCommentsWritten(), 1);
-        $user->addProgress(new FiveCommentsWritten(), 1);
-        $user->addProgress(new TenCommentsWritten(), 1);
-        $user->addProgress(new TwentyCommentsWritten(), 1);
+        $countUserComments = $user->watched->count();
+
+        $achivements = [
+            new FirstCommentWritten(),
+            new ThreeCommentsWritten(),
+            new FiveCommentsWritten(),
+            new TenCommentsWritten(),
+            new TwentyCommentsWritten(),
+        ];
+        
+        foreach ($achivements as $achivement) {
+            if ($countUserComments >= $achivement->points) {
+                $user->unlock($achivement);
+            } else {
+                // to handle the scenario user already add comments before achievement assigned.
+                $user->setProgress($achivement, $countUserComments);
+            }
+        }
     }
 }

@@ -21,7 +21,7 @@ trait EntityRelationsBadges
 
     public function unlockedBadges()
     {
-        return $this->badges()->with('badge')->whereNotNull('unlocked_at')->get();
+        return $this->badges()->with('badge')->whereNotNull('unlocked_at')->orderBy('points','ASC')->get();
     }
 
     public function lockedBadges()
