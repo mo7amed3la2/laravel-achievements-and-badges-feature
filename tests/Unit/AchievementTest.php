@@ -28,21 +28,27 @@ class AchievementTest extends TestCase
     }
 
     /**
+     * Tests the setup
+     */
+    public function testSetup()
+    {
+        // check user does not have achievements.
+        $this->assertEquals(0, $this->user->achievements->count());
+    }
+
+    /**
      * Test unlocked achievement.
      *
      * @return void
      */
     public function test_unlocked()
     {
-        // check user does not have achievements.
-        $this->assertEquals(0, $this->user->achievements->count());
-
         // unlock first achievement.
         $this->user->unlock($this->firstCommentWritten);
         $this->user = $this->user->fresh();
 
         // check user has one unlocked achievement.
-        $this->assertEquals(1, $this->user->unlockedAchievements()->count());
+        $this->assertCount(1, $this->user->unlockedAchievements());
 
         // check the first unlocked achievement get same data.
         $this->assertEquals($this->firstCommentWritten->name, $this->user->unlockedAchievements()->first()->achievement->name);
@@ -52,7 +58,7 @@ class AchievementTest extends TestCase
         $this->user = $this->user->fresh();
 
         // check user has one unlocked achievement.
-        $this->assertEquals(2, $this->user->unlockedAchievements()->count());
+        $this->assertCount(2, $this->user->unlockedAchievements());
 
         // check the second unlocked achievement get the same data.
         $this->assertEquals($this->fiveCommentsWritten->name, $this->user->unlockedAchievements()[1]->achievement->name);
@@ -65,20 +71,35 @@ class AchievementTest extends TestCase
      */
     public function test_in_progress()
     {
-        // check user does not have achievements.
-        $this->assertEquals(0, $this->user->achievements->count());
-
         // adding in progress the first achievement.
         $this->user->addProgress($this->fiveCommentsWritten, 1);
         $this->user = $this->user->fresh();
 
         // check user does not have unlocked achievements.
-        $this->assertEquals(0, $this->user->unlockedAchievements()->count());
+        $this->assertCount(0, $this->user->unlockedAchievements());
 
         // check user has one achievement in progress.
-        $this->assertEquals(1, $this->user->inProgressAchievements()->count());
+        $this->assertCount(1, $this->user->inProgressAchievements());
 
         // check in progress achievement get the same data.
         $this->assertEquals($this->fiveCommentsWritten->name, $this->user->inProgressAchievements()->first()->achievement->name);
+    }
+
+    /**
+     * Test in progress for unlocked achievement.
+     *
+     * @return void
+     */
+    public function test_in_progress_for_achievement_that_unlocked_from_first_time()
+    {
+        // adding in progress the first achievement.
+        $this->user->addProgress($this->firstCommentWritten, 1);
+        $this->user = $this->user->fresh();
+
+        // check user has unlocked achievements.
+        $this->assertCount(1, $this->user->unlockedAchievements());
+
+        // check user does not have achievement in progress.
+        $this->assertCount(0, $this->user->inProgressAchievements());
     }
 }
