@@ -12,7 +12,7 @@ Put your Achievement class In Preferred place and make sure your class extends A
 and you need to define some attributes and event trigger method. like
 `$model` that contain achievements table
 `$modelProgress` that contain achievement progress table
-`triggerUnlocked` to set event you want to fire when achievemnt unlocked
+`triggerUnlocked($achiever)` to set event you want to fire when achievemnt unlocked
 Like 
 
 ```php
