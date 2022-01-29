@@ -1,6 +1,5 @@
 <?php
 
-use App\Achievements\Comments\FiveCommentsWritten;
 use App\Models\User;
 use App\Models\Lesson;
 use App\Models\Comment;
