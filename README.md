@@ -12,6 +12,7 @@ Put your Achievement class In Preferred place and make sure your class extends A
 and you need to define some attributes and event trigger method. like
 `$model` that contain achievements table
 `$modelProgress` that contain achievement progress table
+`$modelProgressRelationNameWithModel` the relation name between progress model and model.
 `triggerUnlocked($achiever)` to set event you want to fire when achievemnt unlocked
 Like 
 
@@ -21,6 +22,8 @@ class FirstCommentWritten extends Achievements
     public $model = Achievement::class;
 
     public $modelProgress = AchievementProgress::class;
+
+    public $modelProgressRelationNameWithModel = 'achivement';
 
     public $type = Achievement::TYPE_COMMENT_WRITTEN;
     
