@@ -4,7 +4,7 @@
 An Implementaion of an achievement and badge feature.
 
 ## Fire events
-To fire events directly go to url fire-events
+To fire events directly go to url  /fire-events
 
 ## Creating Achievements
 Put your Achievement class In Preferred place and make sure your class extends Achievements class that stored in app/contracts/Achievements.
