@@ -101,6 +101,8 @@ class CommentsAchievementsGroup extends AchievementsGroup
 
 ## About Badges
 I seperated it to another tables. to make related achievements/badges stay in one table. 
-So that I do not need to treat many cases and it is easy to add more achievements/badges of the same type
+So that I do not need to treat many cases and it is easy to add more achievements/badges of the same type. and he works the same concept of achievement.
 
+## Note
+There is a scenario when uploaded it in production we need to initial values of achievements and badges to all users . because the users already having comments written and lessons watched.
 
