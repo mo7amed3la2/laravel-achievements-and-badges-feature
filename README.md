@@ -37,7 +37,7 @@ class FirstCommentWritten extends Achievements
      * @var string
      */
 
-     public $description = "Achievement 1 Comment Written";
+    public $description = "Achievement 1 Comment Written";
 
     public function triggerUnlocked($achiever)
     {
@@ -49,8 +49,8 @@ class FirstCommentWritten extends Achievements
 
 
 ## Unlocking Achievements
-Achievements can be unlocked by using the Achiever trait.
-use it in user model and you can use functions unlock.
+Achievements can be unlocked via using the `Achiever` trait who placed in `App\Traits`. 
+use it in user model and you can use function unlock.
 
 ```php
 $user->unlock($achivement);
