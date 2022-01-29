@@ -99,4 +99,8 @@ class CommentsAchievementsGroup extends AchievementsGroup
 (new CommentsAchievementsGroup)->addGroupProgress($user, $countUserComments);
 ```
 
+## About Badges
+I seperated it to another tables. to make related achievements/badges stay in one table. 
+So that I do not need to treat many cases and it is easy to add more achievements/badges of the same type
+
 
