@@ -1,62 +1,111 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<p align="center"><a href="https://iphonephotographyschool.com/" target="_blank"><img src="https://iphonephotographyschool.com/wp-content/themes/ips-theme/images/landing/ips-logo-footer.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## About Code
+An Implementaion of an achievement and badge feature.
 
-## About Laravel
+## Fire events
+To fire events directly go to url  /fire-events
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Creating Achievements
+Put your Achievement class In Preferred place and make sure your class extends Achievements class that stored in app/contracts/Achievements.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+and you need to define some attributes and event trigger method. like
+`$model` that contain achievements table
+`$modelProgress` that contain achievement progress table
+`$modelProgressRelationNameWithModel` the relation name between progress model and model.
+`triggerUnlocked($achiever)` to set event you want to fire when achievemnt unlocked
+Like 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```php
+class FirstCommentWritten extends Achievements
+{
+    public $model = Achievement::class;
 
-## Learning Laravel
+    public $modelProgress = AchievementProgress::class;
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    public $modelProgressRelationNameWithModel = 'achivement';
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    public $type = Achievement::TYPE_COMMENT_WRITTEN;
+    
+    /**
+     * name
+     *
+     * @var string
+     */
+    public $name = "First Comment Written";
+    
+    /**
+     * description
+     *
+     * @var string
+     */
 
-## Laravel Sponsors
+    public $description = "Achievement 1 Comment Written";
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    public function triggerUnlocked($achiever)
+    {
+        event(new AchievementUnlocked($this->name, $achiever));
+    }
 
-### Premium Partners
+}
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
 
-## Contributing
+## Unlocking Achievements
+Achievements can be unlocked via using the `Achiever` trait who placed in `App\Traits`. 
+use it in user model and you can use function unlock.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```php
+$user->unlock($achivement);
+```
 
-## Code of Conduct
+## Adding Achievements Progress
+The sam unlock you have another two functions
+addProgress to add points progress to user achievement like.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```php
+$user->addProgress($achivement, $points);
+```
 
-## Security Vulnerabilities
+And setProgress to adding progress points directly to user achievement.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```php
+$user->setProgress($achivement, $points);
+```
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Group Of Achievemnts.
+I created a class AchievementsGroup that handle a group of related achievemtns. via adding array of achievemnts in group method.
+And run addGroupProgress function to go through the array of acheivemnet and unlock or set progress. like
+
+```php
+class CommentsAchievementsGroup extends AchievementsGroup
+{
+
+    /**
+     * Array of achivements.
+     *
+     * @return array
+     */
+    public function group()
+    {
+        return [
+            new FirstCommentWritten(),
+            new ThreeCommentsWritten(),
+            new FiveCommentsWritten(),
+            new TenCommentsWritten(),
+            new TwentyCommentsWritten(),
+        ];
+    }
+}
+
+(new CommentsAchievementsGroup)->addGroupProgress($user, $countUserComments);
+```
+
+## About Badges
+I seperated it to another tables. to make related achievements/badges stay in one table. 
+So that I do not need to treat many cases and it is easy to add more achievements/badges of the same type. and he works the same concept of achievement.
+
+## Note
+There is a scenario when uploaded it in production we need to initial values of achievements and badges to all users . because the users already having comments written and lessons watched.
+
