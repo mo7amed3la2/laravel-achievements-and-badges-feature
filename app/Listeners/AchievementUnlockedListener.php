@@ -3,9 +3,9 @@
 namespace App\Listeners;
 
 use App\Events\AchievementUnlocked;
-use App\Badges\BadgesAchievementsGroup;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\AchievementsGroup\BadgesAchievementsGroup;
 
 class AchievementUnlockedListener
 {

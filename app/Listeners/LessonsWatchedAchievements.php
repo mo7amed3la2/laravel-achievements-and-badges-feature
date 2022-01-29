@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Events\LessonWatched;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Achievements\Lessons\LessonsAchievementsGroup;
+use App\AchievementsGroup\LessonsAchievementsGroup;
 
 class LessonsWatchedAchievements
 {

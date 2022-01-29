@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Achievements\Comments;
+namespace App\AchievementsGroup;
 
 use App\Contracts\AchievementsGroup;
 use App\Achievements\Comments\TenCommentsWritten;

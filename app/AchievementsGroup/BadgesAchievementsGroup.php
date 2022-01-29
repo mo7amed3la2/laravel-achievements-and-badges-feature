@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Badges;
+namespace App\AchievementsGroup;
 
 use App\Badges\Master;
 use App\Badges\Advanced;

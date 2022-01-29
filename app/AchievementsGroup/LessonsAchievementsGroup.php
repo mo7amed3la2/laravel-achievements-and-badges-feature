@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Achievements\Lessons;
+namespace App\AchievementsGroup;
 
 use App\Contracts\AchievementsGroup;
 use App\Achievements\Lessons\TenLessonsWatched;

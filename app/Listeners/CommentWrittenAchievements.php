@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Events\CommentWritten;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Achievements\Comments\CommentsAchievementsGroup;
+use App\AchievementsGroup\CommentsAchievementsGroup;
 
 class CommentWrittenAchievements
 {
