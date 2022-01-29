@@ -57,14 +57,14 @@ $user->unlock($achivement);
 ```
 
 ## Adding Achievements Progress
-The sam unlock you have anthoer two functions
-addProgress to add points progress to user achievement.
+The sam unlock you have another two functions
+addProgress to add points progress to user achievement like.
 
 ```php
 $user->addProgress($achivement, $points);
 ```
 
-And setProgress to adding progress points to user achievement.
+And setProgress to adding progress points directly to user achievement.
 
 ```php
 $user->setProgress($achivement, $points);
