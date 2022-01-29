@@ -16,15 +16,34 @@ and you need to define some attributes and event trigger method. like
 Like 
 
 ```php
-$model = Achievement::class;
-
-$modelProgress = AchievementProgress::class;
-
-$type = Achievement::TYPE_COMMENT_WRITTEN;
-
-public function triggerUnlocked($achiever)
+class FirstCommentWritten extends Achievements
 {
-    event(new AchievementUnlocked($this->name, $achiever));
+    public $model = Achievement::class;
+
+    public $modelProgress = AchievementProgress::class;
+
+    public $type = Achievement::TYPE_COMMENT_WRITTEN;
+    
+    /**
+     * name
+     *
+     * @var string
+     */
+    public $name = "First Comment Written";
+    
+    /**
+     * description
+     *
+     * @var string
+     */
+
+     public $description = "Achievement 1 Comment Written";
+
+    public function triggerUnlocked($achiever)
+    {
+        event(new AchievementUnlocked($this->name, $achiever));
+    }
+
 }
 ```
 
