@@ -10,9 +10,9 @@ To fire events directly go to url  /fire-events
 Put your Achievement class In Preferred place and make sure your class extends Achievements class that stored in app/contracts/Achievements.
 
 and you need to define some attributes and event trigger method. like
-# model that contain achievements table
-# modelProgress that contain achievement progress table
-# triggerUnlocked to set event you want to fire when achievemnt unlocked
+`$model` that contain achievements table
+`$modelProgress` that contain achievement progress table
+`triggerUnlocked` to set event you want to fire when achievemnt unlocked
 Like 
 
 ```php
@@ -38,7 +38,7 @@ $user->unlock($achivement);
 ```
 
 ## Adding Achievements Progress
-# The sam unlock you have anthoer two functions
+The sam unlock you have anthoer two functions
 addProgress to add points progress to user achievement.
 
 ```php
@@ -54,8 +54,7 @@ $user->setProgress($achivement, $points);
 
 ## Group Of Achievemnts.
 I created a class AchievementsGroup that handle a group of related achievemtns. via adding array of achievemnts in group method.
-And run addGroupProgress function to go through the array of acheivemnet and unlock or set progress.
-#Like
+And run addGroupProgress function to go through the array of acheivemnet and unlock or set progress. like
 
 ```php
 class CommentsAchievementsGroup extends AchievementsGroup
