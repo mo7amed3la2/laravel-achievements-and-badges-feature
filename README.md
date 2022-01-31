@@ -23,7 +23,7 @@ class FirstCommentWritten extends Achievements
 
     public $modelProgress = AchievementProgress::class;
 
-    public $modelProgressRelationNameWithModel = 'achivement';
+    public $modelProgressRelationNameWithModel = 'achievment';
 
     public $type = Achievement::TYPE_COMMENT_WRITTEN;
     
@@ -56,7 +56,7 @@ Achievements can be unlocked via using the `Achiever` trait who placed in `App\T
 use it in user model and you can use function unlock.
 
 ```php
-$user->unlock($achivement);
+$user->unlock($achievment);
 ```
 
 ## Adding Achievements Progress
@@ -64,13 +64,13 @@ The sam unlock you have another two functions
 addProgress to add points progress to user achievement like.
 
 ```php
-$user->addProgress($achivement, $points);
+$user->addProgress($achievment, $points);
 ```
 
 And setProgress to adding progress points directly to user achievement.
 
 ```php
-$user->setProgress($achivement, $points);
+$user->setProgress($achievment, $points);
 ```
 
 
@@ -83,7 +83,7 @@ class CommentsAchievementsGroup extends AchievementsGroup
 {
 
     /**
-     * Array of achivements.
+     * Array of achievments.
      *
      * @return array
      */
