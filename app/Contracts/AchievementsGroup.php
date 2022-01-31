@@ -7,7 +7,7 @@ abstract class AchievementsGroup
 {
 
     /**
-     * Array of achievments.
+     * Array of achievements.
      *
      * @return array
      */
@@ -22,12 +22,12 @@ abstract class AchievementsGroup
      */
     public function addGroupProgress($achiver, $points)
     {
-        foreach ($this->group() as $achievment) {
-            if ($points >= $achievment->points) {
-                $achiver->unlock($achievment);
+        foreach ($this->group() as $achievement) {
+            if ($points >= $achievement->points) {
+                $achiver->unlock($achievement);
             } else {
                 // to handle the scenario achiver already add comments before achievement assigned.
-                $achiver->setProgress($achievment, $points);
+                $achiver->setProgress($achievement, $points);
             }
         }
     }

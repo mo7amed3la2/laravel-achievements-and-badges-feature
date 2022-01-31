@@ -4,7 +4,7 @@
 An Implementaion of an achievement and badge feature.
 
 ## Fire events
-To fire events directly go to url  /fire-events
+First you need to run `php artisan db:seed` then to fire events directly go to url  /fire-events
 
 ## Creating Achievements
 Put your Achievement class In Preferred place and make sure your class extends Achievements class that stored in app/contracts/Achievements.
@@ -23,7 +23,7 @@ class FirstCommentWritten extends Achievements
 
     public $modelProgress = AchievementProgress::class;
 
-    public $modelProgressRelationNameWithModel = 'achievment';
+    public $modelProgressRelationNameWithModel = 'achievement';
 
     public $type = Achievement::TYPE_COMMENT_WRITTEN;
     
@@ -56,7 +56,7 @@ Achievements can be unlocked via using the `Achiever` trait who placed in `App\T
 use it in user model and you can use function unlock.
 
 ```php
-$user->unlock($achievment);
+$user->unlock($achievement);
 ```
 
 ## Adding Achievements Progress
@@ -64,13 +64,13 @@ The sam unlock you have another two functions
 addProgress to add points progress to user achievement like.
 
 ```php
-$user->addProgress($achievment, $points);
+$user->addProgress($achievement, $points);
 ```
 
 And setProgress to adding progress points directly to user achievement.
 
 ```php
-$user->setProgress($achievment, $points);
+$user->setProgress($achievement, $points);
 ```
 
 
@@ -83,7 +83,7 @@ class CommentsAchievementsGroup extends AchievementsGroup
 {
 
     /**
-     * Array of achievments.
+     * Array of achievements.
      *
      * @return array
      */

@@ -12,7 +12,7 @@ class CommentsAchievementsGroup extends AchievementsGroup
 {
 
     /**
-     * Array of achievments.
+     * Array of achievements.
      *
      * @return array
      */
