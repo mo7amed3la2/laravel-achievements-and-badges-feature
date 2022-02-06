@@ -1,4 +1,3 @@
-<p align="center"><a href="https://iphonephotographyschool.com/" target="_blank"><img src="https://iphonephotographyschool.com/wp-content/themes/ips-theme/images/landing/ips-logo-footer.svg" width="400"></a></p>
 
 ## About Code
 An Implementaion of an achievement and badge feature.
