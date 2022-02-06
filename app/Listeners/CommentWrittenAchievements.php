@@ -28,7 +28,7 @@ class CommentWrittenAchievements
     public function handle(CommentWritten $event)
     {
         $user = $event->comment->user;
-        $countUserComments = $user->watched->count();
+        $countUserComments = $user->comments->count();
 
         // adding progress point to user.
         (new CommentsAchievementsGroup)->addGroupProgress($user, $countUserComments);
